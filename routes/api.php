@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,4 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-Route::post('/upload-image', 'ImageController@uploadImage');
+Route::post('uploadfile', [ImageController::class, 'uploadImage']);
