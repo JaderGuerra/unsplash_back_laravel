@@ -13,9 +13,15 @@ class ImageController extends Controller
     {
 
         $label = $request->input('label');
-        $image = $request->file('image_path');
 
-        $imagePath = $image->store('uploads/images', 'navegador');
+        if( $request->hasFile('image_path') ) {
+            $image = $request->file('image_path');
+            $imagePath = $image->store('uploads/images', 'navegador');
+        }
+        else {
+            $imagePath = 'uploads/images/' . ImageService::downloadImage($request->url, public_path('uploads/images/'));
+        }
+
         $imageThumbnail = ImageService::resize(public_path($imagePath));
 
         $file = new File();

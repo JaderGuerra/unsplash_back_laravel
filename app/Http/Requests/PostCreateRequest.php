@@ -23,7 +23,8 @@ class PostCreateRequest extends FormRequest
     {
         return [
             'label' =>  'required|string',
-            'image_path' => 'required|image'
+            'url' => 'required_without_all:image_path|nullable|url',
+            'image_path' => 'required_without_all:url|nullable|image',
         ];
     }
 }
