@@ -14,11 +14,10 @@ class ImageController extends Controller
 
         $label = $request->input('label');
 
-        if( $request->hasFile('image_path') ) {
+        if ($request->hasFile('image_path')) {
             $image = $request->file('image_path');
             $imagePath = $image->store('uploads/images', 'navegador');
-        }
-        else {
+        } else {
             $imagePath = 'uploads/images/' . ImageService::downloadImage($request->url, public_path('uploads/images/'));
         }
 
@@ -50,6 +49,23 @@ class ImageController extends Controller
     {
         $search = $request->query('q');
         return File::where('label', 'LIKE', "%$search%")->get();
+    }
+
+    public function destroy($id)
+    {
+
+        $file = File::findOrFail($id);
+
+        if ($file) {
+            $file->delete();
+            return response()->json([
+                'msg' => 'file deleted successfully'
+            ]);
+        } else {
+            return response()->json([
+                'msg' => 'Error'
+            ]);
+        }
     }
 
     /* public function addUrlToImage($images)

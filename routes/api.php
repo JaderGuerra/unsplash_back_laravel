@@ -22,3 +22,4 @@ use Illuminate\Support\Facades\Route;
 Route::post('uploadfile', [ImageController::class, 'uploadImage']);
 Route::get('getImages', [ImageController::class, 'listImages']);
 Route::get('search', [ImageController::class, 'searchImages']);
+Route::delete('delete/{id}', [ImageController::class, 'destroy']);
