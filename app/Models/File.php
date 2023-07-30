@@ -16,17 +16,27 @@ class File extends Model
         'image_path_thumbnail',
     ];
 
-    protected function imagePath(): Attribute
+    protected $hidden = [
+        'image_path',
+        'image_path_thumbnail',
+    ];
+
+    protected $appends = [
+        'url',
+        'thumbnail'
+    ];
+
+    protected function url(): Attribute
     {
-        return Attribute::make(
-            get: fn (string $value) => url($value),
+        return new Attribute(
+            get: fn () => url($this->image_path),
         );
     }
 
-    protected function imagePathThumbnail(): Attribute
+    protected function thumbnail(): Attribute
     {
-        return Attribute::make(
-            get: fn (string $value) => url($value),
+        return new Attribute(
+            get: fn () => url($this->image_path_thumbnail),
         );
     }
 }

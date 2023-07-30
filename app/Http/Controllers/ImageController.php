@@ -6,6 +6,7 @@ use App\Models\File;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostCreateRequest;
 use App\Service\ImageService;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -57,7 +58,14 @@ class ImageController extends Controller
         $file = File::findOrFail($id);
 
         if ($file) {
+
             $file->delete();
+
+            Storage::disk('navegador')->delete([
+                $file->image_path,
+                $file->image_path_thumbnail
+            ]);
+
             return response()->json([
                 'msg' => 'file deleted successfully'
             ]);
